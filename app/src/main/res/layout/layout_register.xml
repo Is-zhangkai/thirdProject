@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/register_btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/back"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="注册"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginEnd="40dp"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorGray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="账户"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack_10"
+                android:layout_marginStart="24dp"/>
+            <EditText
+                android:id="@+id/register_account"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="9dp"
+                android:gravity="left"
+                android:hint="6-20字符，可以使用英文和数字"
+                android:textSize="17sp"
+                android:textColor="@color/colorBlack_10"
+                android:maxLength="20"
+                android:text=""/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:gravity="center"
+                android:text="密码"
+                android:textColor="@color/colorBlack_10"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/register_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="9dp"
+                android:gravity="left"
+                android:maxLines="1"
+                android:hint="8-16位英文、数字和特殊字符组成"
+                android:textSize="17sp"
+                android:textColor="@color/colorBlack_10"
+                android:maxLength="16"
+                android:text=""/>
+
+
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:text="注册账户"
+            android:textSize="19sp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/button_box"
+            android:paddingHorizontal="12dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"/>
+     </LinearLayout>
+
+
+
+
+
+</LinearLayout>
