@@ -96,7 +96,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (hash!=null){
+                if (hash!=null&&et_name.getText().toString()!=null&&et_info.getText().toString()!=null&&et_price.getText().toString()!=null&&et_quantity.getText().toString()!=null){
                     String name,info;
                     float price;
                     int quantity;
@@ -149,7 +149,8 @@ public class AddActivity extends AppCompatActivity {
                                                     JSONObject jsonObject1=new JSONObject(response.body().string());
                                                     String s=jsonObject1.getString("msg");
                                                     Toast.makeText(AddActivity.this,s,Toast.LENGTH_SHORT).show();
-                                                    finish();
+                                                    if (s.equals("创建成功")){ finish();}
+
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }
@@ -164,6 +165,10 @@ public class AddActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }
+            else {
+                    Toast.makeText(AddActivity.this,"信息不完整！",Toast.LENGTH_SHORT).show();
+
                 }}
         });
 
