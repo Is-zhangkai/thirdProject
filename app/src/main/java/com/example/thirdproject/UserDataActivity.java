@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -51,6 +52,7 @@ public class UserDataActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_user_data);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         imageView=findViewById(R.id.change_head);
          tv_account=findViewById(R.id.change_account);
          tv_name=findViewById(R.id.change_name);
@@ -66,25 +68,15 @@ public class UserDataActivity extends AppCompatActivity {
 
         sharedPreferences= Objects.requireNonNull(getSharedPreferences("token",MODE_PRIVATE));
         token=sharedPreferences.getString("token","null");
+
+        //获取信息
         GET();
 
-//        user_id=getIntent().getIntExtra("id",0);
-//        name=getIntent().getStringExtra("name");
-//        account=getIntent().getStringExtra("account");
-//        info=getIntent().getStringExtra("info");
-//        head=getIntent().getStringExtra("head");
-//        sex=getIntent().getBooleanExtra("sex",true);
+
         Glide.with(UserDataActivity.this).load(R.drawable.user)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(imageView);
-//        if (!head.equals("")){  Glide.with(UserDataActivity.this).load("http://49.232.214.94/api/img/"+head)
-//                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-//                .into(imageView);}
-//
-//        if (sex){tv_sex.setText("男");}else {tv_sex.setText("女");}
-//        tv_account.setText(account);
-//        tv_name.setText(name);
-//        tv_info.setText(info);
+
 
 
 //返回按钮

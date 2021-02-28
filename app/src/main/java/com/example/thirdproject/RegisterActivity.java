@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,17 +32,20 @@ import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private String account;
+    private String account,name,info;
+    private Boolean sex;
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_register);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Button button=findViewById(R.id.btn_register);
         Button button_back=findViewById(R.id.register_btn_back);
         final EditText et_account=findViewById(R.id.register_account);
         final EditText et_password=findViewById(R.id.register_password);
+        final EditText et_password_again=findViewById(R.id.register_password_again);
+
 
         sharedPreferences=getSharedPreferences("token",MODE_PRIVATE);
 
@@ -51,11 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        ///////////////////////注册
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 account=et_account.getText().toString();
 
+
+                if (et_password.getText().toString().equals(et_password_again.getText().toString())){
                 try {
 
 
@@ -73,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Request request = new Request.Builder()
 
                                         .url("http://49.232.214.94/api/register")
-                                        .post(body)
+                                        .method("POST", body)
                                         .addHeader("Accept", "application/json")
                                         .addHeader("User-Agent", "apifox/1.0.26 (https://www.apifox.cn)")
                                         .addHeader("Content-Type", "application/json")
@@ -104,9 +114,11 @@ public class RegisterActivity extends AppCompatActivity {
                                                         JSONObject jsonObject2=jsonObject1.getJSONObject("data");
                                                         sharedPreferences.edit().clear().apply();
                                                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                        editor.putString("token",jsonObject2.getString("token"));
+                                                        final String token=jsonObject2.getString("token");
+                                                        editor.putString("token",token);
                                                         editor.apply();
                                                         editor.commit();
+
                                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                                         startActivity(intent);
                                                         finish();
@@ -133,10 +145,10 @@ public class RegisterActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+            }else {
+                    Toast.makeText(RegisterActivity.this, "密码输入不一致，请重新输入！", Toast.LENGTH_SHORT).show();
 
-
-
-
+                }
             }
         });
 

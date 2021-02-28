@@ -7,12 +7,17 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2">
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/tb"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,6 +48,7 @@
                 android:layout_marginStart="9dp"
                 android:gravity="left"
                 android:maxLines="1"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="请输入账号"
                 android:textSize="17sp"
                 android:textColor="@color/colorBlack_10"
@@ -103,8 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="注册账户"
-            android:textSize="12sp"
-            android:textColor="@color/colorBlack_10"
+            android:textSize="18sp"
+            android:textColor="@color/colorGray"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"/>
     </LinearLayout>

@@ -87,12 +87,6 @@ public class UserCenterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), UserDataActivity.class);
-//                intent.putExtra("name",name);
-//                intent.putExtra("account",account);
-//                intent.putExtra("info",info);
-//                intent.putExtra("sex",sex);
-//                intent.putExtra("id",user_id);
-//                intent.putExtra("head",head);
                 startActivity(intent);
             }
         });
@@ -151,7 +145,7 @@ public class UserCenterFragment extends Fragment {
             Log.i("TAG", "返回的Uri结果：" + CameraActivity.IMG_URI);
             Log.i("TAG", "返回的File结果：" + CameraActivity.IMG_File.getPath());
             CameraActivity.LISTENING = false;   //关闭获取结果
-            Glide.with(getContext()).load(CameraActivity.IMG_URI) .apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
+            //Glide.with(getContext()).load(CameraActivity.IMG_URI) .apply(RequestOptions.bitmapTransform(new CircleCrop())).into(imageView);
 
             try {
                 Thread thread=new Thread(new Runnable() {
@@ -212,10 +206,10 @@ public class UserCenterFragment extends Fragment {
                                             try {
                                                 final JSONObject jsonObject1=new JSONObject(response.body().string());
                                                 final String msg=jsonObject1.getString("msg");
-                                                getActivity().runOnUiThread(new Runnable() {
+                                                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        Toast.makeText(getContext(),"头像上传成功！",Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
                                                        GET();
                                                     }
                                                 });

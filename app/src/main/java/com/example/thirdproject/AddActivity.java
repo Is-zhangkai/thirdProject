@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,7 +48,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_addgoods);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Button button_back=findViewById(R.id.add_btn_back);
         button_comment=findViewById(R.id.add_btn_comment);
         et_name=findViewById(R.id.add_et_name);
@@ -173,7 +174,7 @@ public class AddActivity extends AppCompatActivity {
         });
 
     }
-    /////////////////////////////////////
+    ////////////////////////////////
 
     @Override
     protected void onResume() {

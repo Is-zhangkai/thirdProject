@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,11 +37,12 @@ public class GoodsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private TextView name,price,info,quantity;
     private Pattern httpPattern;
-    private int number=1;
+    private int number=1,goods_number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_goods);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         imageView=findViewById(R.id.goods_img);
         Button button_back=findViewById(R.id.goods_btn_back);
         Button btn_plus=findViewById(R.id.good_btn_add);
@@ -85,62 +87,67 @@ public class GoodsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 number=Integer.parseInt(et_number.getText().toString());
-                Log.i("asd",number+"gs");
-                try {
-                    final JSONObject jsonObject=new JSONObject();
-                    jsonObject.put("good_id",id);
-                    jsonObject.put("quantity",number);
+                if (number>=goods_number) {
+                    Log.i("asd", number + "gs");
+                    try {
+                        final JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("good_id", id);
+                        jsonObject.put("quantity", number);
 
-                    Thread thread=new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            OkHttpClient client = new OkHttpClient().newBuilder()
-                                    .build();
-                            MediaType mediaType = MediaType.parse("application/json");
-                            RequestBody body = RequestBody.create(mediaType, String.valueOf(jsonObject));
-                            Request request = new Request.Builder()
-                                    .url("http://49.232.214.94/api/order")
-                                    .method("POST", body)
-                                    .addHeader("Accept", "application/json")
-                                    .addHeader("Authorization", token)
-                                    .addHeader("User-Agent", "apifox/1.0.26 (https://www.apifox.cn)")
-                                    .addHeader("Content-Type", "application/json")
-                                    .build();
-                            client.newCall(request).enqueue(new Callback() {
-                                @Override
-                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(GoodsActivity.this,"连接网络失败，请检查网络！",Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                    try {
-
-                                        JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
-                                        final String msg = jsonObject.getString("msg");
-
-
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                OkHttpClient client = new OkHttpClient().newBuilder()
+                                        .build();
+                                MediaType mediaType = MediaType.parse("application/json");
+                                RequestBody body = RequestBody.create(mediaType, String.valueOf(jsonObject));
+                                Request request = new Request.Builder()
+                                        .url("http://49.232.214.94/api/order")
+                                        .method("POST", body)
+                                        .addHeader("Accept", "application/json")
+                                        .addHeader("Authorization", token)
+                                        .addHeader("User-Agent", "apifox/1.0.26 (https://www.apifox.cn)")
+                                        .addHeader("Content-Type", "application/json")
+                                        .build();
+                                client.newCall(request).enqueue(new Callback() {
+                                    @Override
+                                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
                                         runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(GoodsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(GoodsActivity.this, "连接网络失败，请检查网络！", Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
                                     }
-                                }
-                            });
-                        }
-                    });
-                    thread.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                                    @Override
+                                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                        try {
+
+                                            JSONObject jsonObject = new JSONObject(Objects.requireNonNull(response.body()).string());
+                                            final String msg = jsonObject.getString("msg");
+
+
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(GoodsActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        thread.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else{
+                    Toast.makeText(GoodsActivity.this,"库存不足！",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -195,9 +202,10 @@ public class GoodsActivity extends AppCompatActivity {
                                 public void run() {
 
                                     try {
+                                        goods_number=jsonObject3.getInt("quantity");
                                         name.setText(jsonObject3.getString("name"));
                                         price.setText("￥"+jsonObject3.getDouble("price"));
-                                        quantity.setText("剩余库存:"+jsonObject3.getInt("quantity")+"件");
+                                        quantity.setText("剩余库存:"+goods_number+"件");
                                         info.setText(jsonObject3.getString("info"));
                                         httpPattern = Pattern
                                                 .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~/])+$");

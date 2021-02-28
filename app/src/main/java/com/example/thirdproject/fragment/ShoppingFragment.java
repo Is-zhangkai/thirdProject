@@ -1,6 +1,7 @@
 package com.example.thirdproject.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,6 @@ public void GetData(final List<Data> list){
                 public void run() {
                     OkHttpClient client = new OkHttpClient().newBuilder()
                             .build();
-
                     Request request = new Request.Builder()
                             .url("http://49.232.214.94/api/goods")
                             .method("GET", null)
@@ -107,7 +107,7 @@ public void GetData(final List<Data> list){
                                 @Override
                                 public void run() {
                                     Toast.makeText(getActivity(), "连接网络失败，请检查网络！", Toast.LENGTH_SHORT).show();
-
+                                    Log.i("asd","khfdkhgsfjfkhkasj");
                                 }
                             });
                         }

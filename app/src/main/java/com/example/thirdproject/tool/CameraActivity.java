@@ -143,7 +143,7 @@ public class CameraActivity extends AppCompatActivity {
                 openCamera();
             } else {
                 //拒绝权限，弹出提示框。
-                Toast.makeText(this, "拍照权限被拒绝", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "拍照权限被拒绝", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -244,7 +244,7 @@ public class CameraActivity extends AppCompatActivity {
                 startActivityForResult(captureIntent, REQUEST_TAKE_PHOTO);
             }
         } else {
-            Toast.makeText(CameraActivity.this, "当前系统没有可用相机", Toast.LENGTH_LONG).show();
+            Toast.makeText(CameraActivity.this, "当前系统没有可用相机", Toast.LENGTH_SHORT).show();
             CameraActivity.this.finish();
         }
     }
@@ -282,7 +282,7 @@ public class CameraActivity extends AppCompatActivity {
                     break;
             }
         } else {
-            //Toast.makeText(this, "取消", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "取消", Toast.LENGTH_SHORT).show();
             CameraActivity.this.finish();
         }
     }
@@ -304,7 +304,7 @@ public class CameraActivity extends AppCompatActivity {
      * 创建保存图片的文件
      */
     private File createImageFile() throws IOException {
-        String imageName = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(new Date());
+        String imageName = new SimpleDateFormat("yyyyMMddHHmm", Locale.getDefault()).format(new Date());
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (!storageDir.exists()) {
             storageDir.mkdir();
